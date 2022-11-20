@@ -1,7 +1,3 @@
-/*
-File name:main
-Author:shayne
-*/
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
