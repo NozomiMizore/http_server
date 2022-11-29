@@ -43,7 +43,7 @@ threadpool<T>::threadpool(int thread_number, int max_requests){
             delete[] this->threads;
             throw std::exception();
         }
-        //让线程分离  ----工作线程自动退出,无需单独回收
+        //让线程分离  ----工作线程完成后自动释放所有资源,无需单独回收
         if(pthread_detach(this->threads[i])){
             delete[] this->threads;
             throw std::exception();
@@ -62,7 +62,7 @@ threadpool<T>::~threadpool(){
 template<typename T>
 bool threadpool<T>::append(T* request){
     queue_locker.lock();
-    if(request_queue.size() > max_requests){
+    if(request_queue.size() >= max_requests){
         queue_locker.unlock();
         return false;
     }
